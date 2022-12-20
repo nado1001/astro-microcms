@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
-    "deploy": "npx wrangler pages publish dist"
+    "deploy": "astro build && npx wrangler pages publish dist"
   },
   "dependencies": {
     "@astrojs/image": "^0.12.1",
