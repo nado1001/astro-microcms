@@ -1,0 +1,19 @@
+---
+import type { Blog } from '@/lib/microcms'
+import dayjs from 'dayjs'
+
+export type Props = Pick<Blog, 'id' | 'eyecatch' | 'title' | 'publishedAt'>
+
+const { id, title, publishedAt, eyecatch } = Astro.props
+const date = dayjs(publishedAt).format('YYYY/MM/DD')
+---
+
+<li class="border border-solid border-black rounded-xl">
+  <a href={`blogs/${id}`} class="block">
+    <img src={eyecatch.url} alt={title} class="w-full rounded-t-xl" />
+    <div class="p-4 bg-white rounded-b-xl">
+      <span class="text-[12px]">{date}</span>
+      <h2>{title}</h2>
+    </div>
+  </a>
+</li>

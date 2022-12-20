@@ -1,0 +1,18 @@
+---
+import type { BlogResponse } from '@/lib/microcms'
+import Item from './Item.astro'
+
+export type Props = {
+  contents: BlogResponse['contents']
+}
+
+const { contents } = Astro.props
+---
+
+<ul class="grid grid-cols-2 gap-10 mt-10">
+  {
+    contents.map((blog) => {
+      return <Item {...blog} />
+    })
+  }
+</ul>

@@ -1,0 +1,14 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import List from '@/components/List.astro'
+
+import { getBlogs } from '@/lib/microcms'
+const response = await getBlogs({
+  fields: ['id', 'title', 'publishedAt', 'eyecatch'],
+})
+---
+
+<Layout title="ブログ一覧">
+  <h1 class="text-[40px] font-bold">記事一覧</h1>
+  <List contents={response.contents} />
+</Layout>

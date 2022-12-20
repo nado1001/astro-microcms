@@ -1,0 +1,43 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { getBlogs, getBlogDetail } from '@/lib/microcms'
+import dayjs from 'dayjs'
+
+export async function getStaticPaths() {
+  const response = await getBlogs({ fields: ['id'] })
+  return response.contents.map((content) => ({
+    params: {
+      blogId: content.id,
+    },
+  }))
+}
+
+const { blogId } = Astro.params
+const blog = await getBlogDetail(blogId as string)
+
+const date = dayjs(blog.publishedAt).format('YYYY/MM/DD')
+---
+
+<Layout title={blog.title}>
+  <div class="mb-4">
+    <a href="/" class="underline">TOPへ戻る</a>
+  </div>
+
+  <img
+    src={blog.eyecatch.url}
+    alt={blog.title}
+    width={blog.eyecatch.width}
+    height={blog.eyecatch.height}
+    class="w-full rounded-xl"
+  />
+
+  <div class="border boeder-solid rounded-xl mt-4 p-4 border-black bg-white">
+    <div
+      class="flex justify-between items-end border-b-4 border-solid pb-2 mb-4"
+    >
+      <h1 class="text-[40px] font-bold">{blog.title}</h1>
+      <span class="text-[12px]">公開日時：{date}</span>
+    </div>
+    <div class="post" set:html={blog.content} />
+  </div>
+</Layout>
